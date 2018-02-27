@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,inital-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <link rel="stylesheet" href="css/styles.css">
   <title>Restaurant Reviews</title>
@@ -11,18 +11,18 @@
 
 <body>
   <header>
-    <nav aria-label="Breadcrumb">
-      <h1><a href="/" tabindex="1">Restaurant Reviews</a></h1>
+    <nav>
+      <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
   <main id="maincontent">
-    <section id="map-container" aria-labelledby="Area on Map" tabindex="2">
+    <section id="map-container" aria-labelledby="Map Area" tabindex="2">
       <div id="map" role="application"></div>
     </section>
     <section>
-      <div class="filter-options">
-        <h2>Filter Results</h2>
+      <div class="filter-options" aria-labelledby="filter-results">
+        <h2 id="filter-results">Filter Results</h2>
         <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-labelledby="Select Neighborhood" tabindex="3">
           <option value="all">All Neighborhoods</option>
         </select>
@@ -34,6 +34,18 @@
     </section>
   </main>
 
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').then(function (registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>  
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3kTlhNs8vlDgdR6E9j4x_vT_XXc6JfvQ&libraries=places&callback=initMap"></script>
