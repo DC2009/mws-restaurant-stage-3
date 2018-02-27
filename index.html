@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -17,35 +17,24 @@
   </header>
 
   <main id="maincontent">
-    <section id="map-container" aria-labelledby="Map Area" tabindex="2">
-      <div id="map" role="application"></div>
+    <section id="map-container" aria-label="Area Map">
+      <div id="map" role="Google map application" aria-hidden="true"></div>
     </section>
     <section>
       <div class="filter-options" aria-labelledby="filter-results">
         <h2 id="filter-results">Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-labelledby="Select Neighborhood" tabindex="3">
+        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label="Select Neighborhood">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-labelledby="Select Cuisines" tabindex="4">
+        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-label="Select Cuisines">
           <option value="all">All Cuisines</option>
         </select>
       </div>
-      <ul id="restaurants-list"></ul>
+      <ul id="restaurants-list" aria-label="Restaurants List"></ul>
     </section>
   </main>
 
   <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js').then(function (registration) {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, function (err) {
-          console.log('ServiceWorker registration failed: ', err);
-        });
-      });
-    }
-  </script>  
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3kTlhNs8vlDgdR6E9j4x_vT_XXc6JfvQ&libraries=places&callback=initMap"></script>
