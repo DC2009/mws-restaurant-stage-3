@@ -179,26 +179,14 @@ option:hover {
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
   display: grid;
-  grid-template-columns: 100%;  
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   grid-gap: 20px;
   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
+  padding: 0; 
   padding: 30px 0; /* 30px 15px 60px; */
   text-align: center;
-}
-@media screen and (min-width: 700px) {
-  #restaurants-list {
-    display: grid;
-    grid-template-columns: 50% 50%;  
-  }
-}
-
-@media screen and (min-width: 900px) {
-  #restaurants-list {
-    display: grid;
-    grid-template-columns: 33% 33% 33%;  
-  }
 }
 
 #restaurants-list li {
@@ -215,7 +203,6 @@ option:hover {
   background-color: #ccc;
   display: block;
   max-width: 100%;
-  min-height: 248px;
   min-width: 100%;
 }
 #restaurants-list li h1 {
