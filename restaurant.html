@@ -28,7 +28,7 @@
   <!-- End header -->
 
   <!-- Beginning main -->
-  <main id="maincontent">
+  <main id="maincontent" role="main">
     <!-- Beginning map -->
     <section id="map-container" aria-label="Area Map">
       <div id="map" role="application" aria-hidden="true"></div>
@@ -36,7 +36,7 @@
     <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
-      <h1 id="restaurant-name" tabindex="0"></h1>
+      <h2 id="restaurant-name" tabindex="0"></h1>
       <img id="restaurant-img" tabindex="0">
       <p id="restaurant-cuisine" tabindex="0"></p>
       <p id="restaurant-address" tabindex="0"></p>
@@ -58,6 +58,26 @@
   <!-- End footer -->
 
   <!-- Beginning scripts -->
+  <!-- Service worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").then(
+        registration => {
+          // Registration was successful
+          console.log(
+            "ServiceWorker registration successful with scope: ",
+            registration.scope
+          );
+        },
+        err => {
+          // Registration failed :(
+          console.log("ServiceWorker registration failed: ", err);
+        }
+      );
+    });
+  }
+</script>
   <!-- Database helpers -->
   <script type="text/javascript" src="js/dbhelper.js"></script>
   <!-- Main javascript file -->
