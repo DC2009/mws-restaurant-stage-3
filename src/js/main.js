@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
  * Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
+  IDBHelper.openIDB();
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
       console.error(error);
@@ -139,11 +140,25 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
+  const picture = document.createElement('picture');
+
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = DBHelper.imageUrlForRestaurant(restaurant) + '.jpg';
   image.alt = `${restaurant.name} cover photo`;
-  li.append(image);
+
+  const webp = document.createElement('source');
+  webp.setAttribute('srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.webp');
+  webp.setAttribute('type', 'image/webp');
+
+  const jpg = document.createElement('source');
+  jpg.setAttribute('srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.jpg');
+  jpg.setAttribute('type', 'image/jpg');
+
+  picture.append(webp);
+  picture.append(jpg);
+  picture.append(image);
+  li.append(picture);
 
   const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
@@ -179,26 +194,4 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 }
 
-
-/* Register a service worker */
-
-serviceWorkerRegister = () => {
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js").then(
-        registration => {
-          // Registration was successful
-          console.log(
-            "ServiceWorker registration successful with scope: ",
-            registration.scope
-          );
-        },
-        err => {
-          // Registration failed :(
-          console.log("ServiceWorker registration failed: ", err);
-        }
-      );
-    });
-  }
-};
 

@@ -1,0 +1,39 @@
+{
+  "name": "mws-restaurant",
+  "version": "1.0.0",
+  "description": "Restaurant app for Udacity Mobile Web Specialist Course.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DC2009/mws-restaurant.git"
+  },
+  "author": "Enrico Colautti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DC2009/mws-restaurant/issues"
+  },
+  "homepage": "https://github.com/DC2009/mws-restaurant#readme",
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "compression": "^1.7.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.1.0",
+    "gulp-babel": "^7.0.1",
+    "gulp-clean-css": "^3.9.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-gm": "0.0.8",
+    "gulp-htmlclean": "^2.7.16",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-inject": "^4.3.0",
+    "gulp-jsmin": "^0.1.5",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-webp": "^3.0.0",
+    "idb": "^2.1.0"
+  },
+  "dependencies": {}
+}
