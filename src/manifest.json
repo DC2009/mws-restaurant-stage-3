@@ -1,5 +1,5 @@
 {
-  "short_name": "Restaurants",
+  "short_name": "Review",
   "name": "Restaurant Review",
   "description": "Find restaurants in your neighbourhood",
   "start_url": "index.html?launcher=true",

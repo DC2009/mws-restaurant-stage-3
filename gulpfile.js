@@ -30,13 +30,13 @@ const paths = {
   manifest: 'manifest.json',
   sw:       'sw.js',
   icons:    'img/icons/*.svg',
-  appICons:'img/app_icons/*.png'
+  appIcons:'img/app_icons/*.png'
 };
 
 gulp.task('html', function () {
   return gulp.src(paths.html, {cwd: bases.src})
-    //.pipe(htmlclean())
-    //.pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(htmlclean())
+    .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest(bases.dist))
     .pipe(reload({stream: true}));
 });
@@ -56,7 +56,7 @@ gulp.task('css', function () {
 
 gulp.task('js', function () {
   return gulp.src(paths.js, {cwd: bases.src})
-    //.pipe(jsmin())
+    .pipe(jsmin())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(bases.dist + 'js/'))
     .pipe(reload({stream: true}));
@@ -83,7 +83,7 @@ gulp.task('img', function() {
     ]))
     .pipe(webp())
     .pipe(gulp.dest(bases.dist + 'img/'));
-
+/*
   gulp.src(paths.img, {cwd: bases.src})
     .pipe(gm(function(gmfile) {
       gmfile.setFormat('jpg').quality(90);
@@ -93,6 +93,7 @@ gulp.task('img', function() {
       imagemin.jpegtran({progressive: true})
     ]))
     .pipe(gulp.dest(bases.dist + 'img/'));
+*/
 });
 
 gulp.task('icons', (() => {
@@ -105,7 +106,7 @@ gulp.task('icons', (() => {
 
 
 gulp.task('app-icons', (() => {
-  gulp.src(paths.appICons, {cwd: bases.src})
+  gulp.src(paths.appIcons, {cwd: bases.src})
     .pipe(gulp.dest(bases.dist + 'img/app_icons'));
 }));
 
