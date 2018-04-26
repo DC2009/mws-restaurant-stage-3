@@ -142,6 +142,20 @@ createRestaurantHTML = (restaurant) => {
   const picture = document.createElement('picture');
 
   const image = document.createElement('img');
+  image.className = 'restaurant-img lazyload';
+  image.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant) + '.jpg');
+  image.alt = `${restaurant.name} cover photo`;
+
+  const webp = document.createElement('source');
+  webp.setAttribute('data-srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.webp');
+  webp.setAttribute('type', 'image/webp');
+
+  const jpg = document.createElement('source');
+  jpg.setAttribute('data-srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.jpg');
+  jpg.setAttribute('type', 'image/jpg');
+/*
+  const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant) + '.jpg';
   image.alt = `${restaurant.name} cover photo`;
@@ -153,7 +167,7 @@ createRestaurantHTML = (restaurant) => {
   const jpg = document.createElement('source');
   jpg.setAttribute('srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.jpg');
   jpg.setAttribute('type', 'image/jpg');
-
+*/
   picture.append(webp);
   picture.append(jpg);
   picture.append(image);
