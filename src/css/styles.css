@@ -298,8 +298,7 @@ option:hover {
   text-align: center;
   line-height: 1.1;
 }
-#restaurant-img {
-  width: 90%;
+#restaurant-picture {
   justify-self: center;
 }
 #restaurant-address {
