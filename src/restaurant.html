@@ -40,12 +40,37 @@
       <picture id="restaurant-picture" tabindex="0"></picture>
       <p id="restaurant-cuisine" tabindex="0"></p>
       <p id="restaurant-address" tabindex="0"></p>
-      <table id="restaurant-hours" tabindex="0"></table>
+      <table id="restaurant-hours" tabindex="0" aria-label="Restaurant hours"></table>
     </section>
     <!-- end restaurant -->
     <!-- Beginning reviews -->
     <section id="reviews-container">
-      <ul id="reviews-list" role="list"></ul>
+      <section id="reviews-list-container">
+          <ul id="reviews-list" role="list" aria-labelledby="reviews-list"></ul>
+      </section>
+      <section id="new-review-container">
+        <h3 id="new-review-title" tabindex="0">Add a review</h3>
+        <form id="review-form" onsubmit="postReview()">
+            <div id="form-restaurant-id">
+              <input aria-label="Restaurant ID" id="restaurant-id" name="id" hidden="hidden" type="text" readonly="readonly">
+            </div>
+            <div id="new-review-name">
+              <label for="user-name">Name: </label>
+              <input aria-label="User Name" id="user-name" name="name" type="text" placeholder="your name">
+            </div>
+            <div id="new-review-rating">
+              <label for="user-rating">Rating: </label>
+              <input aria-label="User Rating" id="user-rating" name="rating" type="number" placeholder="your rating" min="0" max="15">
+            </div>
+            <div id="new-review-textarea">
+              <label for="user-comment">Comment: </label>            
+              <textarea aria-label="User Comment" id="user-comment" name="comments" placeholder="your review"></textarea>
+            </div>
+            <div id="new-review-submit-button">
+              <button id="new-review-submit" aria-label="Submit Review" type="submit">Submit</button>
+            </div>
+          </form>
+      </section>
     </section>
     <!-- End reviews -->
   </main>

@@ -342,6 +342,9 @@ option:hover {
   letter-spacing: -1px;
   padding-bottom: 1pt;
 }
+#reviews-list-container {
+  margin-bottom: 2em;
+}
 #reviews-list {
   margin: 0;
   padding: 0;
@@ -366,4 +369,54 @@ option:hover {
 }
 #reviews-list li p {
   margin: 0 0 5px;
+}
+#new-review-container {
+  border-top: 1px solid powderblue;
+}
+
+#new-review-title {
+  margin-top: 1em
+}
+
+#review-form {
+  margin: 0.5em;
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+#reviews-list {
+  min-height: 40px;
+  min-width: 40px;
+  background-color: blueviolet;
+}
+
+textarea, input {
+  background-color: rgb(196, 214, 247);
+  border: none;
+  margin: 1em;
+  padding: 0.5em;
+}
+
+textarea {
+  vertical-align: top;
+  resize  : none;
+  overflow: auto;
+  width: 100%;
+  height: 5em;
+}
+
+input {
+  width: 100%;
+}
+
+label {
+  display: block;
+}
+
+#new-review-submit {
+  border: none;
+  padding: 1em 3em;
 }
