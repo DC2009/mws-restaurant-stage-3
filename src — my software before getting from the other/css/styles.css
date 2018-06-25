@@ -117,33 +117,8 @@ nav h1 a {
   width: 100%;
   background-color: #ccc;
 }
-
-#map-container {
-  display: block;
-}
-
-#static-map-container {
-  height: 400px;
-  background: lightblue url(../img/fakemap.webp) no-repeat center;
-  background-size: cover;
-}
-
-#static-map-container {
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-#btn-map {
-  color: white;
-  background-color: #f18200;
-  padding: 1em 3em;
-  cursor: pointer;
-}
-
 @media screen and (min-width:700px)  { 
-  #static-map-container, #map {
+  #map {
     height: 660px;
   }
 }
@@ -251,33 +226,13 @@ option:hover {
   color: #fff;
   display: inline-block;
   font-size: 10pt;
-  margin: 15px 0;
-  padding: 8px 0;
-  width: 100%;
+  margin: 15px 0 0;
+  padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
 }
 
-.favorite-container {
-  font-size: 2.5em;
-  text-align: right;
-  margin: 15px 15px 0 0;
-}
-
-.favorite-container span {
-  transition: 0.5s;
-}
-
-.normal {
-  opacity: 0.8;
-  color: darkslategrey;
-}
-
-.is-favorite {
-  opacity: 1;
-  color: red;
-}
 /* ====================== Restaurant Details ====================== */
 .inside header {
   position: fixed;

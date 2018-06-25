@@ -50,7 +50,7 @@
       </section>
       <section id="new-review-container">
         <h3 id="new-review-title" tabindex="0">Add a review</h3>
-        <form id="review-form" method="post" action="#">
+        <form id="review-form" onsubmit="submitReview()">
             <input id="restaurant-id" name="id" hidden="hidden" type="text" readonly="readonly">
             <div id="new-review-name">
               <label for="user-name">Name: </label>
@@ -65,7 +65,7 @@
               <textarea aria-label="User Comment" id="user-comment" name="comments" placeholder="your review"></textarea>
             </div>
             <div id="new-review-submit-button">
-              <input type="submit" id="new-review-submit" value="Submit">
+              <button id="new-review-submit" aria-label="Submit Review" type="submit">Submit</button>
             </div>
           </form>
       </section>

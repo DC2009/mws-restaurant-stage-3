@@ -11,25 +11,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
   serviceWorkerRegister();
-  updateRestaurants();
-  createStaticMapHTML();
-});  
-
-/**
- * Add markers for current restaurants to the map.
- */
-createStaticMapHTML = () => {
-  const staticMapContainer = document.getElementById('static-map-container');
-  const mapContainer = document.getElementById('map-container');
-  mapContainer.style.display = 'none';
-  const button = document.getElementById('btn-map');
-
-  button.addEventListener('click', () => {
-    window.initMap();
-    staticMapContainer.style.display = 'none';
-    mapContainer.style.display = 'block';
-  });
-};
+});
 
 /**
  * Fetch all neighborhoods and set their HTML.
@@ -172,7 +154,20 @@ createRestaurantHTML = (restaurant) => {
   const jpg = document.createElement('source');
   jpg.setAttribute('data-srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.jpg');
   jpg.setAttribute('type', 'image/jpg');
+/*
+  const image = document.createElement('img');
+  image.className = 'restaurant-img';
+  image.src = DBHelper.imageUrlForRestaurant(restaurant) + '.jpg';
+  image.alt = `${restaurant.name} cover photo`;
 
+  const webp = document.createElement('source');
+  webp.setAttribute('srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.webp');
+  webp.setAttribute('type', 'image/webp');
+
+  const jpg = document.createElement('source');
+  jpg.setAttribute('srcset', DBHelper.imageUrlForRestaurant(restaurant)+'.jpg');
+  jpg.setAttribute('type', 'image/jpg');
+*/
   picture.append(webp);
   picture.append(jpg);
   picture.append(image);
@@ -189,32 +184,6 @@ createRestaurantHTML = (restaurant) => {
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
   li.append(address);
-
-  const favoriteContainer = document.createElement('div');
-  favoriteContainer.classList.add('favorite-container');
-  
-  const favorite = document.createElement('span');
-  favorite.setAttribute('role', 'img');
-  favorite.setAttribute('aria-label', 'heart emoji');
-  favorite.classList.add('normal');
-  favorite.innerText = '\u2764';
-
-  if (restaurant.is_favorite == null || restaurant.is_favorite == undefined) {
-    restaurant['is favorite'] = false;
-  }
-
-  if (restaurant.is_favorite) {
-    favorite.classList.add('is-favorite');
-  }
-
-  favorite.addEventListener('click', e => {
-    e.target.classList.toggle('is-favorite');
-    restaurant.is_favorite = !restaurant.is_favorite;
-    DBHelper.favoriteRestaurant(restaurant);
-  });
-
-  favoriteContainer.append(favorite);
-  li.append(favoriteContainer);
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';

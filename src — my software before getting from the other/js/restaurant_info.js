@@ -21,7 +21,7 @@ window.initMap = () => {
   });
 };
 */
-
+//window.initMap = () => {
 initMap = () => {
     self.map = new google.maps.Map(document.getElementById('map'), {
     zoom: 16,
@@ -33,6 +33,7 @@ initMap = () => {
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
+  console.log('DOMContentLoaded: ', event);
 	fetchRestaurantFromURL((error, restaurant) => {
 		if (error) {
 			// Got an error!
@@ -43,39 +44,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   });
 
-  document.getElementById('new-review-submit').addEventListener('click', submitReview);
-
-  DBHelper.loadStore('pending-reviews', 'pending-reviews')
-    .then(data => {
-      if (data.length == 0) {
-        return;
-      }
-
-      if (!self.pendingReviews) {
-        self.pendingReviews = [];
-      }
-
-      data.forEach(rev => {
-        self.pendingReviews.push(rev);
-      });
-
-      if (navigator.connection.downlink != 0) {
-        data.forEach(rev => {
-          // remove the temporary id to prevent conflicts with the API DB
-          delete rev.id;
-          DBHelper.postReview(rev).then(function() {
-            DBHelper.deleteStore('pending-reviews', 'pending-reviews');
-          });
-        });
-      }
-
-      return data;
-    })
-    .catch(err => {
-      console.log(`Error initialising data on document loaded: ${err}`);
-    });
-
 });
+
+//document.addEventListener()
 
 /**
  * Get current restaurant from ID.
@@ -83,6 +54,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 fetchRestaurantFromId = (id, callback) => {
   DBHelper.fetchRestaurantById(id, (error, restaurant) => {
     self.restaurant = restaurant;
+    console.log('fetchRestaurantById: ', self.restaurant);
     if (!restaurant) {
       console.error(error);
       return;
@@ -96,6 +68,7 @@ fetchRestaurantFromId = (id, callback) => {
  * Get current restaurant reviews from ID.
  */
 fetchReviewsByRestaurantId = (callback) => {
+  console.log('fetchReviewsByRestaurantId', self.restaurant.reviews);
   if (self.restaurant.reviews) {
     callback(null, self.restaurant.reviews);
     return;
@@ -103,7 +76,7 @@ fetchReviewsByRestaurantId = (callback) => {
 
   DBHelper.fetchReviewsByRestaurantId(self.restaurant.id, (err, reviews) => {
     if (err) {
-      console.log('Error fetching reviews by restaurant id: ',err);
+      console.log(err);
       callback(err, null);
       return;
     }
@@ -119,6 +92,7 @@ fetchReviewsByRestaurantId = (callback) => {
  * Get current restaurant from page URL.
  */
 fetchRestaurantFromURL = (callback) => {
+  console.log('fetchRestaurantFromURL restaurant: ', self.restaurant);
   if (self.restaurant) { // restaurant already fetched!
     callback(null, self.restaurant);
     return;
@@ -162,6 +136,12 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   picture.append(jpg);
   picture.append(image);
 
+/*  
+  const image = document.getElementById('restaurant-img');
+  image.className = 'restaurant-img'
+  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = `${restaurant.name} cover photo`;
+*/
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
 
@@ -172,7 +152,16 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  getReviewsById();
+	fetchReviewsByRestaurantId((error, reviews) => {
+		if (error) {
+			// Got an error!
+			console.error(error);
+		} else {
+      console.log('going to fill the reviews ', reviews);
+      fillReviewsHTML(reviews);
+    }
+  });
+
 };
 
 /**
@@ -201,6 +190,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+  console.log('fillreviews');
   const container = document.getElementById('reviews-list-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -209,6 +199,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   container.appendChild(title);
 
   if (!reviews) {
+    console.log('no reviews');
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
     noReviews.setAttribute('tabindex', 0);
@@ -216,11 +207,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     return;
   }
 
-  // Add any pending reviews to the reviews array if offline
-  if (self.pendingReviews) {
-    reviews.push(...self.pendingReviews);
-  }
-
+  console.log('found reviews');
   const ul = document.getElementById('reviews-list');
   reviews.reverse().forEach(review => {
     ul.appendChild(createReviewHTML(review));
@@ -232,6 +219,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  * Create review HTML and add it to the webpage.
  */
 createReviewHTML = (review) => {
+  console.log('createReviewHTML: ', review);
   const li = document.createElement('li');
   li.setAttribute('tabindex', 0);
   
@@ -275,6 +263,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
 getParameterByName = (name, url) => {
   if (!url)
     url = window.location.href;
+  console.log('getParameterByName url: ', url);  
   name = name.replace(/[\[\]]/g, '\\$&');
   const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
     results = regex.exec(url);
@@ -286,66 +275,35 @@ getParameterByName = (name, url) => {
 };
 
 /**
- * Get reviews by id
+ * Post a new review
  */
-getReviewsById = callback => {
-  if (self.reviews) {
-    callback(null, self.reviews);
-    return;
-  }
+submitReview = (e) => {
+  //e.preventDefault();
+  console.log('submitreview');
+  const name = document.getElementById('user-name').value;
+	const rating = document.getElementById('user-rating').value;
+	const comments = document.getElementById('user-comment').value;
 
-  const id = getParameterByName('id');
-  if (!id) {
-    error = 'Could not get parameter id';
-    callback(error, null);
-  } else {
-    DBHelper.fetchReviewsById(id, (error, reviews) => {
-      if (!reviews) {
-        console.error(error);
-        return;
-      }
-      self.restaurant.reviews = reviews;
-
-      // fill reviews
-      fillReviewsHTML();
-    });
-  }
-};
-
-/**
- * Submit a new review.
- */
-submitReview = e => {
-  e.preventDefault();
-  let name = document.getElementById('user-name').value;
-  let comments = document.getElementById('user-comment').value;
-  //let rating = parseInt(
-  //  document.querySelector('input[name="rating"]:checked').value
-  //);
-  let rating = document.getElementById('user-rating').value;
-
-  const review = {
+  const date = Date.now();
+	const review = {
     restaurant_id: self.restaurant.id,
     name,
     rating,
     comments,
-    createdAt: Date.now(),
-    updatedAt: Date.now()
+    createdAt: date,
+    updatedAt: date
   };
 
-  // Post review to server
-  DBHelper.postReview(review).then(function() {
-    // Reset form
-    name = '';
-    rating = '';
-    comments = '';
-
-    const ul = document.getElementById('reviews-list');
-    ul.insertBefore(createReviewHTML(review), ul.childNodes[0]);
-    ul.childNodes[0].scrollIntoView({
-      behavior: "smooth"
+  DBHelper.postReview(review)
+    .then( () => {
+      name.value = '';
+      rating.value = '';
+      comments.value = '';
+      const ul = document.getElementById('reviews-list');
+      console.log('submitReview: ', ul);
+      ul.insertBefore(createReviewHTML(review), ul.childNodes[0]);
+      console.log('submitReview review inserted');
     });
-  });
 };
 
 

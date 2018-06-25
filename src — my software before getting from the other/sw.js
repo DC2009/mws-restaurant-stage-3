@@ -27,13 +27,14 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
 		caches.open(cacheName)
 			.then((cache) => {
+				console.log('Opened cache');
 				return cache.addAll(urlsToCache);
 			})
 	);
 });
 
 self.addEventListener('activate', (event) => {
-  //event.waitUntil(self.clients.claim());
+  event.waitUntil(self.clients.claim());
 
 	event.waitUntil(
 		caches.keys().then((cacheNames) => {
