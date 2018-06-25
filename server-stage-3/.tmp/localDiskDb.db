@@ -582,6 +582,42 @@
         "createdAt": 1529936830679,
         "updatedAt": 1529936830679,
         "id": 38
+      },
+      {
+        "restaurant_id": 2,
+        "name": "Pam",
+        "rating": "3",
+        "comments": "Great",
+        "createdAt": 1529938323078,
+        "updatedAt": 1529938323078,
+        "id": 39
+      },
+      {
+        "restaurant_id": 2,
+        "name": "Pamela",
+        "rating": "3",
+        "comments": "Average",
+        "createdAt": 1529938436563,
+        "updatedAt": 1529938436563,
+        "id": 40
+      },
+      {
+        "restaurant_id": 2,
+        "name": "Adam",
+        "rating": "3",
+        "comments": "Quite ok",
+        "createdAt": 1529939030667,
+        "updatedAt": 1529939030667,
+        "id": 41
+      },
+      {
+        "restaurant_id": 2,
+        "name": "Adam",
+        "rating": "3",
+        "comments": "Avg",
+        "createdAt": 1529939076375,
+        "updatedAt": 1529939076375,
+        "id": 42
       }
     ]
   },
@@ -637,7 +673,7 @@
       "id": 10
     },
     "reviews": {
-      "id": 38
+      "id": 42
     }
   }
 }
