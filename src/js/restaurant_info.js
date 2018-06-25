@@ -203,6 +203,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-list-container');
   const title = document.createElement('h3');
+
   title.innerHTML = 'Reviews';
   title.setAttribute('aria-label', 'Reviews');
   title.setAttribute('tabindex', '0');  
