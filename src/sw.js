@@ -147,6 +147,7 @@ function addAllData(rlist) {
 // reviews
 
 self.addEventListener('sync', function (event) {
+  console.log('sync fired');
   if (event.tag === 'sync') {
     event.waitUntil(
       sendReviews()
