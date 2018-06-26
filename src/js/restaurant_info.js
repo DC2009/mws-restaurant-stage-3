@@ -35,8 +35,7 @@ initMap = () => {
 document.addEventListener('DOMContentLoaded', (event) => {
 	fetchRestaurantFromURL((error, restaurant) => {
 		if (error) {
-			// Got an error!
-			console.error(error);
+			console.error('Error fetching restaurants when content loaded: ', error);
 		} else {
 			fillBreadcrumb();
       initMap();
@@ -320,9 +319,6 @@ submitReview = e => {
   e.preventDefault();
   let name = document.getElementById('user-name').value;
   let comments = document.getElementById('user-comment').value;
-  //let rating = parseInt(
-  //  document.querySelector('input[name="rating"]:checked').value
-  //);
   let rating = document.getElementById('user-rating').value;
 
   const review = {

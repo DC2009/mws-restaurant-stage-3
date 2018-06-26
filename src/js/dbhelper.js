@@ -66,21 +66,35 @@ class DBHelper {
   /**
    * Save to IDB.
    */
-  static saveStore(data, transactionName, storeName) {
+  static saveToIDB(data, transactionName, storeName) {
     return DBHelper.openIDB().then(db => {
       if (!db) return;
 
       const tx = db.transaction(transactionName, 'readwrite');
       const store = tx.objectStore(storeName);
 
-			for (let element of Array.from(data)) {
-				store.put(element);
-			}
+      Array.from(data).forEach(bit => store.put(bit));
+
       return tx.complete;
     });
   }
 
-  
+  /**
+   * Save review to IDB.
+   */
+  static saveReviewToIDB(data, transactionName, storeName) {
+    return DBHelper.openIDB().then(db => {
+      if (!db) return;
+
+      const tx = db.transaction(transactionName, 'readwrite');
+      const store = tx.objectStore(storeName);
+
+      store.put(data);
+
+      return tx.complete;
+    });
+  }
+
   /**
    * Get data from API.
    */
@@ -89,7 +103,7 @@ class DBHelper {
       .then(response => response.json())
       .then(data => {
         // Refresh IDB stale data
-        DBHelper.saveStore(data, transactionName, storeName);
+        DBHelper.saveToIDB(data, transactionName, storeName);
         return data;
       });
   }
@@ -288,10 +302,13 @@ class DBHelper {
     )
       .then(response => response.json())
       .then(data => {
-        DBHelper.saveStore(self.restaurants, 'restaurants', 'restaurants');
+        DBHelper.saveToIDB(self.restaurants, 'restaurants', 'restaurants');
         return data;
       })
-      .catch(e => console.error(`Error updating favorite restaurant: ${e}`));
+      .catch(e => {
+        DBHelper.saveToIDB(self.restaurants, 'restaurants', 'restaurants');
+        console.error(`Error updating favorite restaurant: ${e}`)
+      });
   }
 
   /**
@@ -333,7 +350,7 @@ class DBHelper {
     })
       .then(resp => resp.json())
       .then(data => {
-        DBHelper.saveStore(
+        DBHelper.saveReviewToIDB(
           data,
           `reviews-restaurant-${self.restaurant.id}`,
           `reviews-restaurant-${self.restaurant.id}`
@@ -342,7 +359,7 @@ class DBHelper {
       })
       .catch(err => {
         // Save a pending review in IDB
-        DBHelper.saveStore(review, `pending-reviews`, `pending-reviews`);
+        DBHelper.saveReviewToIDB(review, `pending-reviews`, `pending-reviews`);
 
 				if (!self.pendingReviews) {
           self.pendingReviews = [];

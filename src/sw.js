@@ -20,6 +20,7 @@ var urlsToCache = [
   '/img/8.webp',
   '/img/9.webp',
   '/img/10.webp',
+  '/img/fakemap.webp'
 	//'/img/placeholder.webp',
 ];
 
