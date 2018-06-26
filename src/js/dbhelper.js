@@ -66,7 +66,7 @@ class DBHelper {
   /**
    * Save to IDB.
    */
-  static saveToIDB(data, transactionName, storeName) {
+  static saveStore(data, transactionName, storeName) {
     return DBHelper.openIDB().then(db => {
       if (!db) return;
 
@@ -82,7 +82,7 @@ class DBHelper {
   /**
    * Save review to IDB.
    */
-  static saveReviewToIDB(data, transactionName, storeName) {
+  static saveReview(data, transactionName, storeName) {
     return DBHelper.openIDB().then(db => {
       if (!db) return;
 
@@ -103,7 +103,7 @@ class DBHelper {
       .then(response => response.json())
       .then(data => {
         // Refresh IDB stale data
-        DBHelper.saveToIDB(data, transactionName, storeName);
+        DBHelper.saveStore(data, transactionName, storeName);
         return data;
       });
   }
@@ -302,11 +302,11 @@ class DBHelper {
     )
       .then(response => response.json())
       .then(data => {
-        DBHelper.saveToIDB(self.restaurants, 'restaurants', 'restaurants');
+        DBHelper.saveStore(self.restaurants, 'restaurants', 'restaurants');
         return data;
       })
       .catch(e => {
-        DBHelper.saveToIDB(self.restaurants, 'restaurants', 'restaurants');
+        DBHelper.saveStore(self.restaurants, 'restaurants', 'restaurants');
         console.error(`Error updating favorite restaurant: ${e}`)
       });
   }
@@ -350,7 +350,7 @@ class DBHelper {
     })
       .then(resp => resp.json())
       .then(data => {
-        DBHelper.saveReviewToIDB(
+        DBHelper.saveReview(
           data,
           `reviews-restaurant-${self.restaurant.id}`,
           `reviews-restaurant-${self.restaurant.id}`
@@ -359,7 +359,7 @@ class DBHelper {
       })
       .catch(err => {
         // Save a pending review in IDB
-        DBHelper.saveReviewToIDB(review, `pending-reviews`, `pending-reviews`);
+        DBHelper.saveReview(review, `pending-reviews`, `pending-reviews`);
 
 				if (!self.pendingReviews) {
           self.pendingReviews = [];
