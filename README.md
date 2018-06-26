@@ -14,6 +14,7 @@ For the **Restaurant Reviews** projects, I implemented the following requirement
 The server for stage 3 runs on localhost:1337
 
 To install the projects run:
+
 npm install
 
 and
